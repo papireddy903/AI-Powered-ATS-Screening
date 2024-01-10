@@ -1,13 +1,29 @@
 import fitz
-def ExtractPDFText(pdf_path):
+from io import BytesIO
+import streamlit as st
+
+def ExtractPDFText(pdf):
     content = ""
-    pdf_document = fitz.open(pdf_path)
-    for page_number in range(pdf_document.page_count):
-        # Get the text content of the page
-        page = pdf_document[page_number]
-        text = page.get_text()
-        content += text 
+    pdf_bytes = pdf.read()
+
+    try:
+        # Open the PDF using fitz
+        pdf_document = fitz.open("dummy.pdf", pdf_bytes)
+        
+        # Iterate through pages and extract text
+        for page_number in range(pdf_document.page_count):
+            page = pdf_document[page_number]
+            text = page.get_text()
+            content += text
+        
+    except Exception as e:
+        st.error(f"Error extracting text from PDF: {e}")
+        
+    finally:
+        # Close the PDF document
+        if "pdf_document" in locals():
+            pdf_document.close()
+
+    return content
 
 
-    pdf_document.close()
-    return content 

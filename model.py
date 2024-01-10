@@ -11,7 +11,7 @@ model = genai.GenerativeModel("gemini-pro")
 def modelFeedback(ats_score,resume_data):
 
     input_prompt = f"""
-        You are now an ATS Score analyzer and given ATS Score is {ats_score}. 
+        You are now an ATS Score analyzer and given ATS Score is {int(ats_score*100)}%. 
         Your task is to provide feedback to the user based on the ATS score.
         print ATS score first. mention where resume is good and where resume lacks. 
         talk about the resume like one to one chat. 
